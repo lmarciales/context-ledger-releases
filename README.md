@@ -8,4 +8,10 @@ Este repo solo guarda los instaladores de **context-ledger**, una app personal. 
 curl -fsSL https://raw.githubusercontent.com/lmarciales/context-ledger-releases/main/install-mac.sh | sh
 ```
 
-Después de la primera instalación, la app se actualiza sola desde aquí.
+Para instalar una versión puntual, por ejemplo para probar el actualizador:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/lmarciales/context-ledger-releases/main/install-mac.sh | sh -s -- 0.1.0
+```
+
+Sin permisos de administrador, la app queda en `~/Applications`. Después de la primera instalación, la app se actualiza sola desde aquí.
