@@ -14,7 +14,13 @@ if [ $# -gt 0 ]; then
 else
   MANIFEST="$RELEASES/latest/download/latest.json"
 fi
-DEST="/Applications/context-ledger.app"
+# sin permisos de administrador queda en ~/Applications; el actualizador la reemplaza donde esté
+APPS="/Applications"
+if [ ! -w "$APPS" ]; then
+  APPS="$HOME/Applications"
+  mkdir -p "$APPS"
+fi
+DEST="$APPS/context-ledger.app"
 
 URL=$(curl -fsSL "$MANIFEST" | tr ',' '\n' | grep -o 'https://[^"]*\.app\.tar\.gz' | head -1)
 if [ -z "$URL" ]; then
