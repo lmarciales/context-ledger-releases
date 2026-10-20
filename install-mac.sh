@@ -5,14 +5,20 @@
 #
 # Uso:
 #   curl -fsSL https://raw.githubusercontent.com/lmarciales/context-ledger-releases/main/install-mac.sh | sh
+#   curl -fsSL …/install-mac.sh | sh -s -- 0.1.0    # una versión puntual, por ejemplo para probar el actualizador
 set -eu
 
-LATEST="https://github.com/lmarciales/context-ledger-releases/releases/latest/download/latest.json"
+RELEASES="https://github.com/lmarciales/context-ledger-releases/releases"
+if [ $# -gt 0 ]; then
+  MANIFEST="$RELEASES/download/v${1#v}/latest.json"
+else
+  MANIFEST="$RELEASES/latest/download/latest.json"
+fi
 DEST="/Applications/context-ledger.app"
 
-URL=$(curl -fsSL "$LATEST" | tr ',' '\n' | grep -o 'https://[^"]*\.app\.tar\.gz' | head -1)
+URL=$(curl -fsSL "$MANIFEST" | tr ',' '\n' | grep -o 'https://[^"]*\.app\.tar\.gz' | head -1)
 if [ -z "$URL" ]; then
-  echo "No encontré una versión para macOS en $LATEST"
+  echo "No encontré una versión para macOS en $MANIFEST"
   exit 1
 fi
 
